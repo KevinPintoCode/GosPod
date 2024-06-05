@@ -6,7 +6,7 @@ import ConvexClientProvider from "./providers/ConvexClientProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GossPods",
+  title: "GosPod",
   description: "Create your Podcast using AI",
   icons: {
     icon: "/icons/logo.svg",
