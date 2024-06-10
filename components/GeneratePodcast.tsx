@@ -7,13 +7,30 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
 
-const useGeneratePodcast = (props: GeneratePodcastProps) => {
+const useGeneratePodcast = ({
+  setAudio,
+  voicePrompt,
+  voiceType,
+  setAudioStorageId,
+}: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
   //Logic for Podcast Generation with custom hook
-  const generatePodcast = () => {};
+  const generatePodcast = () => {
+    setIsGenerating(true);
+    setAudio("");
+
+    if (!voicePrompt) {
+      return setIsGenerating(false);
+    }
+    try {
+    } catch {
+      console.log("Error generating Podcast");
+      setIsGenerating(false);
+    }
+  };
 
   return {
-    isGenerating: false,
+    isGenerating: isGenerating,
     generatePodcast: generatePodcast,
   };
 };
