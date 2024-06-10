@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+
+// APP
+
+const voiceCategories = ["Alloy", "Shimmer", "Nova", "Echo", "Fable", "Onyx"];
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -31,6 +37,7 @@ const formSchema = z.object({
 });
 
 const CreatePodcast = () => {
+  const [voiceType, setVoiceType] = useState<string | null>(null);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,15 +86,35 @@ const CreatePodcast = () => {
               <Label className="text-16 font-bold text-white-1">
                 Select AI Voice
               </Label>
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Theme" />
+              <Select onValueChange={(value) => setVoiceType(value)}>
+                <SelectTrigger
+                  className={cn(
+                    "text-16 w-full border-none bg-black-1 text-gray-1"
+                  )}
+                >
+                  <SelectValue
+                    className="placeholder:text-gray-1"
+                    placeholder="Select AI Voice"
+                  />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
+                  {voiceCategories.map((category) => (
+                    <SelectItem
+                      key={category}
+                      value={category}
+                      className="capitalize focus:bg-orange-1"
+                    >
+                      {category}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
+                {voiceType && (
+                  <audio
+                    src={`/${voiceType}.mp3`}
+                    autoPlay
+                    className="hidden"
+                  />
+                )}
               </Select>
             </div>
           </div>
