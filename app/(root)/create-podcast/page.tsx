@@ -63,8 +63,9 @@ const CreatePodcast = () => {
   );
   const [imageUrl, setImageUrl] = useState("");
 
-  const [voicePrompt, setvoicePrompt] = useState<string | null>(null);
-  const [voiceType, setVoiceType] = useState<string | null>(null);
+  const [voiceType, setVoiceType] = useState<string>("");
+  const [voicePrompt, setVoicePrompt] = useState<string>("");
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -100,7 +101,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="GosPod Podcast"
                       {...field}
                     />
@@ -116,7 +117,7 @@ const CreatePodcast = () => {
               <Select onValueChange={(value) => setVoiceType(value)}>
                 <SelectTrigger
                   className={cn(
-                    "text-16 w-full border-none bg-black-1 text-gray-1"
+                    "text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-offset-orange-1"
                   )}
                 >
                   <SelectValue
@@ -124,7 +125,7 @@ const CreatePodcast = () => {
                     placeholder="Select AI Voice"
                   />
                 </SelectTrigger>
-                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
+                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus-visible:ring-offset-orange-1">
                   {voiceCategories.map((category) => (
                     <SelectItem
                       key={category}
@@ -154,7 +155,7 @@ const CreatePodcast = () => {
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class focus-visible:ring-offset-orange-1"
                       placeholder="Write a short description for your GosPod."
                       {...field}
                     />
@@ -171,7 +172,7 @@ const CreatePodcast = () => {
               voiceType={voiceType}
               audio={audioUrl}
               voicePrompt={voicePrompt}
-              setVoicePrompt={setvoicePrompt}
+              setVoicePrompt={setVoicePrompt}
               setAudioDuration={setAudioDuration}
             />
             <GenerateThumbnail />
