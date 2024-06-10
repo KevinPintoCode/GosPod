@@ -1,5 +1,4 @@
 "use client";
-
 import { SignIn } from "@clerk/clerk-react";
 
 const Page = () => {

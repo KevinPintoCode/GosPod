@@ -2,7 +2,7 @@
 import PodcastCard from "@/components/PodcastCard";
 import { podcastData } from "@/constants";
 import React from "react";
-//Convex with api.tasks.get
+//Convex useQuery to use the data from api.tasks.get
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
