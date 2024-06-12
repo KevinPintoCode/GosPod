@@ -6,8 +6,11 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
-import { useAction } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { v4 as uuidv4 } from "uuid";
+
+import { useUploadFiles } from "@xixixao/uploadstuff/react";
 
 const useGeneratePodcast = ({
   setAudio,
@@ -16,6 +19,9 @@ const useGeneratePodcast = ({
   setAudioStorageId,
 }: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  //Uploadstuff library
+  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const { startUpload } = useUploadFiles(generateUploadUrl);
   //Convex docs to make a API action - this is coming from openai.ts in Convex folder
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
 
@@ -32,6 +38,12 @@ const useGeneratePodcast = ({
         voice: voiceType,
         input: voicePrompt,
       });
+      //This is for reading mp3 audios
+      const blob = new Blob([response], { type: "audio/mpeg" });
+      const fileName = `podcast-${uuidv4()}.mp3`;
+      const file = new File([blob], fileName, { type: "audio/mpeg" });
+
+      const uploaded = startUpload([file]);
     } catch {
       console.log("Error generating Podcast");
       setIsGenerating(false);
