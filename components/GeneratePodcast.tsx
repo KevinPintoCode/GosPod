@@ -19,10 +19,11 @@ const useGeneratePodcast = ({
   setAudioStorageId,
 }: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
-  //Uploadstuff library
+  //CONVEX APIs
+  //Uploadstuff library with API coming from Convex
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const { startUpload } = useUploadFiles(generateUploadUrl);
-  //Convex docs to make a API action - this is coming from openai.ts in Convex folder
+  //Convex docs to make an API action - this is coming from openai.ts in Convex folder
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
 
   //Logic for Podcast Generation with custom hook
