@@ -36,7 +36,7 @@ import GenerateThumbnail from "@/components/GenerateThumbnail";
 
 // APP
 
-const voiceCategories = ["Alloy", "Shimmer", "Nova", "Echo", "Fable", "Onyx"];
+const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2, {

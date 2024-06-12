@@ -6,6 +6,8 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
+import { useAction } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const useGeneratePodcast = ({
   setAudio,
@@ -14,8 +16,11 @@ const useGeneratePodcast = ({
   setAudioStorageId,
 }: GeneratePodcastProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  //Convex docs to make a API action - this is coming from openai.ts in Convex folder
+  const getPodcastAudio = useAction(api.openai.generateAudioAction);
+
   //Logic for Podcast Generation with custom hook
-  const generatePodcast = () => {
+  const generatePodcast = async () => {
     setIsGenerating(true);
     setAudio("");
 
@@ -23,6 +28,10 @@ const useGeneratePodcast = ({
       return setIsGenerating(false);
     }
     try {
+      const response = await getPodcastAudio({
+        voice: voiceType,
+        input: voicePrompt,
+      });
     } catch {
       console.log("Error generating Podcast");
       setIsGenerating(false);
