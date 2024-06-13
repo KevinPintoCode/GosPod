@@ -22,9 +22,12 @@ const useGeneratePodcast = ({
   //CONVEX APIs
   //Uploadstuff library with API coming from Convex
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  //UseUploadFiles, coming from uploadstuff to send data to DB
   const { startUpload } = useUploadFiles(generateUploadUrl);
   //Convex docs to make an API action - this is coming from openai.ts in Convex folder
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
+  //!!! we create the API by using useMutation OR useAction(api.{app/location}.theFunctionName)
+  const getAudioUrl = useMutation(api.podcast.getUrl);
 
   //Logic for Podcast Generation with custom hook
   const generatePodcast = async () => {
@@ -44,7 +47,14 @@ const useGeneratePodcast = ({
       const fileName = `podcast-${uuidv4()}.mp3`;
       const file = new File([blob], fileName, { type: "audio/mpeg" });
 
-      const uploaded = startUpload([file]);
+      const uploaded = await startUpload([file]);
+      const storageId = (uploaded[0].response as any).storageId;
+
+      setAudioStorageId(storageId);
+
+      const audioUrl = await getAudioUrl({ storageId });
+      setAudio(audioUrl!);
+      setIsGenerating(false);
     } catch {
       console.log("Error generating Podcast");
       setIsGenerating(false);
