@@ -15,14 +15,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
 
-const { toast } = useToast();
-
 const useGeneratePodcast = ({
   setAudio,
   voicePrompt,
   voiceType,
   setAudioStorageId,
 }: GeneratePodcastProps) => {
+  const { toast } = useToast();
+
   const [isGenerating, setIsGenerating] = useState(false);
   //CONVEX APIs
   //Uploadstuff library with API coming from Convex

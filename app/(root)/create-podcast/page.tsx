@@ -63,8 +63,8 @@ const CreatePodcast = () => {
   );
   const [imageUrl, setImageUrl] = useState("");
 
-  const [voiceType, setVoiceType] = useState<string>("");
-  const [voicePrompt, setVoicePrompt] = useState<string>("");
+  const [voiceType, setVoiceType] = useState<string | null>(null);
+  const [voicePrompt, setVoicePrompt] = useState("");
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -169,7 +169,7 @@ const CreatePodcast = () => {
             <GeneratePodcast
               setAudioStorageId={setAudioStorageId}
               setAudio={setAudioUrl}
-              voiceType={voiceType}
+              voiceType={voiceType!}
               audio={audioUrl}
               voicePrompt={voicePrompt}
               setVoicePrompt={setVoicePrompt}
