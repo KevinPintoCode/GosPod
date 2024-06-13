@@ -6,11 +6,16 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+
 import { useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+
 import { v4 as uuidv4 } from "uuid";
 
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
+
+const { toast } = useToast();
 
 const useGeneratePodcast = ({
   setAudio,
@@ -35,6 +40,9 @@ const useGeneratePodcast = ({
     setAudio("");
 
     if (!voicePrompt) {
+      toast({
+        title: "Please provide a voice type.",
+      });
       return setIsGenerating(false);
     }
     try {
@@ -55,8 +63,14 @@ const useGeneratePodcast = ({
       const audioUrl = await getAudioUrl({ storageId });
       setAudio(audioUrl!);
       setIsGenerating(false);
+      toast({
+        title: "Your Podcast has been generated!",
+      });
     } catch {
-      console.log("Error generating Podcast");
+      toast({
+        title: "Error generating Podcast",
+        variant: "destructive",
+      });
       setIsGenerating(false);
     }
   };
@@ -88,6 +102,7 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
         <Button
           type="submit"
           className="text-16 bg-orange-1 py-4 font-bold text-white-1"
+          onClick={generatePodcast}
         >
           {isGenerating ? (
             <>
