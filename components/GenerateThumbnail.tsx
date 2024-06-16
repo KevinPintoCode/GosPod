@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { Textarea } from "./ui/textarea";
 import { GenerateThumbnailProps } from "@/types";
 import { Loader } from "lucide-react";
+import { Input } from "./ui/input";
 
 const GenerateThumbnail = ({
   setImage,
@@ -15,6 +16,7 @@ const GenerateThumbnail = ({
 }: GenerateThumbnailProps) => {
   const [isAiThumbnail, setisAiThumbnail] = useState(false);
   const [isGenerating, setisGenerating] = useState(false);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const generateImage = async () => {};
   return (
@@ -34,44 +36,44 @@ const GenerateThumbnail = ({
           onClick={() => setisAiThumbnail(false)}
           className={cn("", { "bg-black-6": !isAiThumbnail })}
         >
-          Upload your thumbnail.
+          Upload custom thumbnail.
         </Button>
       </div>
       {isAiThumbnail ? (
-        <div>
-          <div>
-            <div className="flex flex-col gap-2.5 ">
-              <Label className="text-16 font-bold text-white-1">
-                AI Prompt to generate your Podcast.
-              </Label>
-              <Textarea
-                className="input-class font-light focus-visible:ring-offset-orange-1"
-                placeholder="Provide text to generate Audio"
-                rows={5}
-                value={imagePrompt}
-                onChange={(e) => setImagePrompt(e.target.value)}
-              ></Textarea>
-            </div>
-            <div className="mt-5 w-full max-w-[200px]">
-              <Button
-                type="submit"
-                className="text-16 bg-orange-1 py-4 font-bold text-white-1"
-                onClick={generateImage}
-              >
-                {isGenerating ? (
-                  <>
-                    Generating Podcast...
-                    <Loader size={20} className="animate-spin ml-2" />
-                  </>
-                ) : (
-                  "Generate with AI"
-                )}
-              </Button>
-            </div>
+        <div className="flex flex-col gap-5">
+          <div className="mt-5 flex flex-col gap-2.5 ">
+            <Label className="text-16 font-bold text-white-1">
+              AI Prompt to generate your Thumbnail.
+            </Label>
+            <Textarea
+              className="input-class font-light focus-visible:ring-offset-orange-1"
+              placeholder="Provide text to generate thumbnail"
+              rows={5}
+              value={imagePrompt}
+              onChange={(e) => setImagePrompt(e.target.value)}
+            />
+          </div>
+          <div className="w-full max-w-[200px]">
+            <Button
+              type="submit"
+              className="text-16 bg-orange-1 py-4 font-bold text-white-1"
+              onClick={generateImage}
+            >
+              {isGenerating ? (
+                <>
+                  Generating Podcast...
+                  <Loader size={20} className="animate-spin ml-2" />
+                </>
+              ) : (
+                "Generate AI Thumbnail"
+              )}
+            </Button>
           </div>
         </div>
       ) : (
-        <div></div>
+        <div className="image-div" onClick={() => imageRef?.current?.click()}>
+          <Input type="file" ref={imageRef} />
+        </div>
       )}
     </>
   );
