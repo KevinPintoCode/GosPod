@@ -6,6 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { GenerateThumbnailProps } from "@/types";
 import { Loader } from "lucide-react";
 import { Input } from "./ui/input";
+import Image from "next/image";
 
 const GenerateThumbnail = ({
   setImage,
@@ -15,10 +16,13 @@ const GenerateThumbnail = ({
   setImagePrompt,
 }: GenerateThumbnailProps) => {
   const [isAiThumbnail, setisAiThumbnail] = useState(false);
-  const [isGenerating, setisGenerating] = useState(false);
+  const [isImageLoading, SetIsImageLoading] = useState(false);
   const imageRef = useRef<HTMLInputElement>(null);
 
   const generateImage = async () => {};
+  const uploadImage = async (e: {
+    e: React.ChangeEvent<HTMLInputElement>;
+  }) => {};
   return (
     <>
       <div className="generate_thumbnail">
@@ -59,7 +63,7 @@ const GenerateThumbnail = ({
               className="text-16 bg-orange-1 py-4 font-bold text-white-1"
               onClick={generateImage}
             >
-              {isGenerating ? (
+              {isImageLoading ? (
                 <>
                   Generating Podcast...
                   <Loader size={20} className="animate-spin ml-2" />
@@ -71,8 +75,43 @@ const GenerateThumbnail = ({
           </div>
         </div>
       ) : (
-        <div className="image-div" onClick={() => imageRef?.current?.click()}>
-          <Input type="file" ref={imageRef} />
+        <div className="image_div" onClick={() => imageRef?.current?.click()}>
+          <Input
+            className="hidden"
+            type="file"
+            ref={imageRef}
+            onChange={(e) => uploadImage(e)}
+          />
+          {!isImageLoading ? (
+            <Image
+              alt="Upload image"
+              src="/icons/upload-image.svg"
+              width={40}
+              height={40}
+            />
+          ) : (
+            <div className="text-16 flex-center font-medium">
+              Uploading
+              <Loader size={20} className="animate-spin ml-2" />
+            </div>
+          )}
+          <div className="flex flex-col items-center gap-1">
+            <h2 className="text-12 font-bold text-orange-1">Click to Upload</h2>
+            <p className="text-12 font-normal text-gray-1">
+              SVG, PNG, JPG or GIF (max 1080x1080px)
+            </p>
+          </div>
+        </div>
+      )}
+      {image && (
+        <div className="flex-center w-full">
+          <Image
+            src={image}
+            width={200}
+            height={200}
+            className="mt-5"
+            alt="Thumbnail"
+          />
         </div>
       )}
     </>
