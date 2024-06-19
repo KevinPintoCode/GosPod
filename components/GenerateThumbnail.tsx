@@ -8,9 +8,10 @@ import { Loader } from "lucide-react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { useToast } from "./ui/use-toast";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
 import { api } from "@/convex/_generated/api";
+import { v4 as uuidv4 } from "uuid";
 
 const GenerateThumbnail = ({
   setImage,
@@ -26,11 +27,14 @@ const GenerateThumbnail = ({
   const { toast } = useToast();
 
   //Uploadstuff library with API coming from Convex
-  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
-  //UseUploadFiles, coming from uploadstuff to send data to DB
-  const { startUpload } = useUploadFiles(generateUploadUrl);
   //!!! we create the API by using useMutation OR useAction(api.{app/location}.theFunctionName)
+  //UseUploadFiles, coming from uploadstuff to send data to DB
+
+  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const { startUpload } = useUploadFiles(generateUploadUrl);
+
   const getImageUrl = useMutation(api.podcast.getUrl);
+  const handleGenerateThumbnail = useAction(api.openai.generateThumbnailAction);
 
   const handleImage = async (blob: Blob, fileName: string) => {
     SetIsImageLoading(true);
@@ -55,7 +59,18 @@ const GenerateThumbnail = ({
       toast({ title: "Error generating thumbnail", variant: "destructive" });
     }
   };
-  const generateImage = async () => {};
+
+  const generateImage = async () => {
+    try {
+      const response = await handleGenerateThumbnail({ prompt: imagePrompt });
+      const blob = new Blob([response], { type: "image/png" });
+      handleImage(blob, `thumbnail-${uuidv4()}`);
+    } catch (error) {
+      console.log(error);
+      toast({ title: "Error generating thumbnail", variant: "destructive" });
+    }
+  };
+
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     try {
@@ -69,6 +84,7 @@ const GenerateThumbnail = ({
       toast({ title: "Error uploading image", variant: "destructive" });
     }
   };
+
   return (
     <>
       <div className="generate_thumbnail">
