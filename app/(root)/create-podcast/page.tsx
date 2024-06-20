@@ -106,7 +106,7 @@ const CreatePodcast = (p0: {
         setIsSubmitting(false);
         throw new Error("You must generate Audio And Thumbnail first.");
       }
-      await CreatePodcast({
+      const podcast = await CreatePodcast({
         podcastTitle: data.podcastTitle,
         podcastDescription: data.podcastDescription,
         audioUrl,
@@ -119,6 +119,10 @@ const CreatePodcast = (p0: {
         audioStorageID: audioStorageId!,
         imageStorageId: imageStorageId!,
       });
+      toast({
+        title: "Podcast created!",
+      });
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       toast({
