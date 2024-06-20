@@ -30,13 +30,13 @@ import {
 } from "@/components/ui/select";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
 
 //Components
 import GeneratePodcast from "@/components/GeneratePodcast";
 import GenerateThumbnail from "@/components/GenerateThumbnail";
-import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
-import { useRouter } from "next/router";
 
 // APP
 
@@ -116,6 +116,7 @@ const CreatePodcast = () => {
         variant: "destructive",
       });
       setIsSubmitting(false);
+      router.push("/");
     }
     console.log(data);
   }
