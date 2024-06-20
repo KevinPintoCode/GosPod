@@ -34,6 +34,8 @@ import { useState } from "react";
 //Components
 import GeneratePodcast from "@/components/GeneratePodcast";
 import GenerateThumbnail from "@/components/GenerateThumbnail";
+import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
 
 // APP
 
@@ -58,14 +60,16 @@ const CreatePodcast = () => {
     null
   );
 
+  const [imageUrl, setImageUrl] = useState("");
   const [imagePrompt, setimagePrompt] = useState("");
   const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(
     null
   );
-  const [imageUrl, setImageUrl] = useState("");
 
   const [voiceType, setVoiceType] = useState<string | null>(null);
   const [voicePrompt, setVoicePrompt] = useState("");
+
+  const createPodcast = useMutation(api.podcast.createPodcast);
 
   const { toast } = useToast();
   // 1. Define your form.
