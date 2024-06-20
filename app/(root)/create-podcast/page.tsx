@@ -36,6 +36,7 @@ import GeneratePodcast from "@/components/GeneratePodcast";
 import GenerateThumbnail from "@/components/GenerateThumbnail";
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
+import { useRouter } from "next/router";
 
 // APP
 
@@ -50,19 +51,8 @@ const formSchema = z.object({
   }),
 });
 
-const CreatePodcast = (p0: {
-  podcastTitle: string;
-  podcastDescription: string;
-  audioUrl: string;
-  imageUrl: string;
-  voiceType: string;
-  imagePrompt: string;
-  voicePrompt: string;
-  views: number;
-  audioDuration: number;
-  audioStorageID: Id<"_storage">;
-  imageStorageId: Id<"_storage">;
-}) => {
+const CreatePodcast = () => {
+  const router = useRouter();
   //States
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -106,7 +96,7 @@ const CreatePodcast = (p0: {
         setIsSubmitting(false);
         throw new Error("You must generate Audio And Thumbnail first.");
       }
-      const podcast = await CreatePodcast({
+      await createPodcast({
         podcastTitle: data.podcastTitle,
         podcastDescription: data.podcastDescription,
         audioUrl,
@@ -119,10 +109,6 @@ const CreatePodcast = (p0: {
         audioStorageID: audioStorageId!,
         imageStorageId: imageStorageId!,
       });
-      toast({
-        title: "Podcast created!",
-      });
-      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       toast({
