@@ -50,7 +50,19 @@ const formSchema = z.object({
   }),
 });
 
-const CreatePodcast = () => {
+const CreatePodcast = (p0: {
+  podcastTitle: string;
+  podcastDescription: string;
+  audioUrl: string;
+  imageUrl: string;
+  voiceType: string;
+  imagePrompt: string;
+  voicePrompt: string;
+  views: number;
+  audioDuration: number;
+  audioStorageID: Id<"_storage">;
+  imageStorageId: Id<"_storage">;
+}) => {
   //States
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -82,7 +94,7 @@ const CreatePodcast = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
@@ -94,7 +106,19 @@ const CreatePodcast = () => {
         setIsSubmitting(false);
         throw new Error("You must generate Audio And Thumbnail first.");
       }
-      // await CreatePodcast()
+      await CreatePodcast({
+        podcastTitle: data.podcastTitle,
+        podcastDescription: data.podcastDescription,
+        audioUrl,
+        imageUrl,
+        voiceType,
+        imagePrompt,
+        voicePrompt,
+        views: 0,
+        audioDuration,
+        audioStorageID: audioStorageId!,
+        imageStorageId: imageStorageId!,
+      });
     } catch (error) {
       console.log(error);
       toast({
@@ -103,7 +127,7 @@ const CreatePodcast = () => {
       });
       setIsSubmitting(false);
     }
-    console.log(values);
+    console.log(data);
   }
 
   return (
