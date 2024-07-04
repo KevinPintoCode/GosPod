@@ -10,7 +10,7 @@ const PodcastCard = ({
   imgUrl: string;
   title: string;
   description: string;
-  podcastId: number;
+  podcastId: string;
 }) => {
   return (
     <>

@@ -54,7 +54,7 @@ export const createPodcast = mutation({
 
 export const getTrendingPodcasts = query({
   handler: async (ctx) => {
-    const podcasts = await ctx.db.query("podcasts").collect;
+    const podcasts = await ctx.db.query("podcasts").collect();
 
     return podcasts;
   },
