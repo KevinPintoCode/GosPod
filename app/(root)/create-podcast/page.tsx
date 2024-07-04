@@ -71,7 +71,7 @@ const CreatePodcast = () => {
   const [voiceType, setVoiceType] = useState<string | null>(null);
   const [voicePrompt, setVoicePrompt] = useState("");
 
-  const createPodcast = useMutation(api.podcast.createPodcast);
+  const createPodcast = useMutation(api.podcasts.createPodcast);
 
   const { toast } = useToast();
   // 1. Define your form.
@@ -96,7 +96,7 @@ const CreatePodcast = () => {
         setIsSubmitting(false);
         throw new Error("You must generate Audio And Thumbnail first.");
       }
-      await createPodcast({
+      const podcast = await createPodcast({
         podcastTitle: data.podcastTitle,
         podcastDescription: data.podcastDescription,
         audioUrl,
@@ -106,9 +106,12 @@ const CreatePodcast = () => {
         voicePrompt,
         views: 0,
         audioDuration,
-        audioStorageID: audioStorageId!,
+        audioStorageId: audioStorageId!,
         imageStorageId: imageStorageId!,
       });
+      toast({ title: "Podcast created" });
+      setIsSubmitting(false);
+      router.push("/");
     } catch (error) {
       console.log(error);
       toast({
@@ -116,7 +119,6 @@ const CreatePodcast = () => {
         variant: "destructive",
       });
       setIsSubmitting(false);
-      router.push("/");
     }
     console.log(data);
   }

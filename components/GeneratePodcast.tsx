@@ -32,7 +32,7 @@ const useGeneratePodcast = ({
   //Convex docs to make an API action - this is coming from openai.ts in Convex folder
   const getPodcastAudio = useAction(api.openai.generateAudioAction);
   //!!! we create the API by using useMutation OR useAction(api.{app/location}.theFunctionName)
-  const getAudioUrl = useMutation(api.podcast.getUrl);
+  const getAudioUrl = useMutation(api.podcasts.getUrl);
 
   //Logic for Podcast Generation with custom hook
   const generatePodcast = async () => {

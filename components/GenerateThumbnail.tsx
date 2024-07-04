@@ -33,7 +33,7 @@ const GenerateThumbnail = ({
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const { startUpload } = useUploadFiles(generateUploadUrl);
 
-  const getImageUrl = useMutation(api.podcast.getUrl);
+  const getImageUrl = useMutation(api.podcasts.getUrl);
   const handleGenerateThumbnail = useAction(api.openai.generateThumbnailAction);
 
   const handleImage = async (blob: Blob, fileName: string) => {

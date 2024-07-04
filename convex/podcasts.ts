@@ -22,11 +22,12 @@ export const createPodcast = mutation({
     voicePrompt: v.string(),
     views: v.number(),
     audioDuration: v.number(),
-    audioStorageID: v.id("_storage"),
+    audioStorageId: v.id("_storage"),
     imageStorageId: v.id("_storage"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
+
     if (!identity) {
       throw new ConvexError("Not Authenticated");
     }
