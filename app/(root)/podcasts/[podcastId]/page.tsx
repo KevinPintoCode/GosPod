@@ -1,5 +1,8 @@
 "use client";
 
+import EmptyState from "@/components/EmptyState";
+import LoaderSpinner from "@/components/LoaderSpinner";
+import PodcastCard from "@/components/PodcastCard";
 import PodcastDetailPlayer from "@/components/PodcastDetailPlayer";
 
 import { api } from "@/convex/_generated/api";
@@ -13,7 +16,14 @@ const PodcastDetails = ({
 }: {
   params: { podcastId: Id<"podcasts"> };
 }) => {
+  //Querys to fetch different podcasts
   const podcast = useQuery(api.podcasts.getPodcastById, { podcastId });
+  const similarPodcasts = useQuery(api.podcasts.getPodcastByVoiceType, {
+    podcastId,
+  });
+
+  if (!similarPodcasts || !podcast) return <LoaderSpinner />;
+
   return (
     <section className="flex w-full flex-col">
       <header className="mt-9 flex items-center justify-between">
@@ -49,6 +59,27 @@ const PodcastDetails = ({
       </div>
       <section className="mt-8 flex flex-col gap-5">
         <h1 className="text-20 font-bold text-white-1">Similar Podcasts</h1>
+        {similarPodcasts && similarPodcasts.length > 0 ? (
+          <div className="podcast_grid">
+            {similarPodcasts?.map(
+              ({ _id, podcastTitle, podcastDescription, imageUrl }) => (
+                <PodcastCard
+                  key={_id}
+                  imgUrl={imageUrl}
+                  title={podcastTitle}
+                  description={podcastDescription}
+                  podcastId={_id}
+                />
+              )
+            )}
+          </div>
+        ) : (
+          <EmptyState
+            title="No similar podcast found"
+            buttonLink="/discover"
+            buttonText="Discover more Podcasts"
+          />
+        )}
       </section>
     </section>
   );
