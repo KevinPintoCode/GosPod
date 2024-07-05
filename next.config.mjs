@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "useful-ibex-990.convex.cloud",
       },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
+      },
     ],
   },
 };
