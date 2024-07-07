@@ -62,16 +62,6 @@ export const getTrendingPodcasts = query({
   },
 });
 
-//Query to search a Podcast by its ID.
-export const getPodcastById = query({
-  args: {
-    podcastId: v.id("podcasts"),
-  },
-  handler: async (ctx, args) => {
-    return await ctx.db.get(args.podcastId);
-  },
-});
-
 //Query to search a Podcast by its voice type.
 export const getPodcastByVoiceType = query({
   args: {
@@ -109,5 +99,41 @@ export const deletePodcast = mutation({
     await ctx.storage.delete(args.imageStorageId);
     await ctx.storage.delete(args.audioStorageId);
     return await ctx.db.delete(args.podcastId);
+  },
+});
+
+export const getAllPodcasts = query({
+  handler: async (ctx) => {
+    return await ctx.db.query("podcasts").order("desc").collect();
+  },
+});
+
+// this query will get the podcast by the podcastId.
+export const getPodcastById = query({
+  args: {
+    podcastId: v.id("podcasts"),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.podcastId);
+  },
+});
+
+// this query will get the podcast by the authorId.
+export const getPodcastByAuthorId = query({
+  args: {
+    authorId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const podcasts = await ctx.db
+      .query("podcasts")
+      .filter((q) => q.eq(q.field("authorId"), args.authorId))
+      .collect();
+
+    const totalListeners = podcasts.reduce(
+      (sum, podcast) => sum + podcast.views,
+      0
+    );
+
+    return { podcasts, listeners: totalListeners };
   },
 });
