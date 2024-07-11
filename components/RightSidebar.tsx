@@ -1,14 +1,17 @@
 "use client";
 
-import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Header from "./Header";
 import Carousel from "./Carousel";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const RightSidebar = () => {
   const { user } = useUser();
+  const topPodCasters = useQuery(api.users.getTopUserByPodcastCount);
 
   return (
     <section className="right_sidebar text-white-1">
@@ -29,7 +32,7 @@ const RightSidebar = () => {
         </Link>
       </SignedIn>
       <section>
-        <Header headerTitle="Fans Like You" titleClassName="oi" />
+        <Header headerTitle="Fans Also Like" titleClassName="oi" />
         <Carousel />
       </section>
     </section>
