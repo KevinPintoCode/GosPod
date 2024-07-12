@@ -34,8 +34,6 @@ const EmblaCarousel = ({ fansLikeDetail }: CarouselProps) => {
     fansLikeDetail &&
     fansLikeDetail?.filter((item: any) => item.totalPodcasts > 0);
 
-  console.log(slides);
-
   return (
     <section
       className="flex w-full flex-col gap-4 overflow-hidden"
@@ -45,22 +43,23 @@ const EmblaCarousel = ({ fansLikeDetail }: CarouselProps) => {
         <div className="flex">
           {slides.slice(0, 5).map((item) => (
             <figure
-              onClick={() =>
-                router.push(`/podcast/${item.podcast[0]?.podcastId}`)
-              }
               key={item._id}
-              className="carousel-box"
+              className="carousel_box"
+              onClick={() =>
+                router.push(`/podcasts/${item.podcast[0]?.podcastId}`)
+              }
             >
               <Image
-                width={20}
-                height={20}
                 src={item.imageUrl}
                 alt="card"
+                fill
                 className="absolute size-full rounded-xl border-none"
               />
               <div>
-                <h2>{item.podcast[0]?.podcastTitle}</h2>
-                <p>{item.podcast[0]?.podcastTitle}</p>
+                <h2 className="text-14 font-semibold text-white-1">
+                  {item.podcast[0]?.podcastTitle}
+                </h2>
+                <p className="text-12 font-normal text-white-2">{item.name}</p>
               </div>
             </figure>
           ))}
