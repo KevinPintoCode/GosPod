@@ -11,7 +11,7 @@ import { api } from "@/convex/_generated/api";
 
 const RightSidebar = () => {
   const { user } = useUser();
-  const topPodCasters = useQuery(api.users.getTopUserByPodcastCount);
+  const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
 
   return (
     <section className="right_sidebar text-white-1">
@@ -33,7 +33,7 @@ const RightSidebar = () => {
       </SignedIn>
       <section>
         <Header headerTitle="Fans Also Like" titleClassName="oi" />
-        <Carousel fansLikeDetail={topPodCasters!} />
+        <Carousel fansLikeDetail={topPodcasters!} />
       </section>
     </section>
   );
