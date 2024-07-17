@@ -53,6 +53,26 @@ export const createPodcast = mutation({
   },
 });
 
+//Mutation to delete a podcast
+export const deletePodcast = mutation({
+  args: {
+    podcastId: v.id("podcasts"),
+    imageStorageId: v.id("_storage"),
+    audioStorageId: v.id("_storage"),
+  },
+  handler: async (ctx, args) => {
+    const podcast = await ctx.db.get(args.podcastId);
+
+    if (!podcast) {
+      throw new ConvexError("Podcast not found");
+    }
+
+    await ctx.storage.delete(args.imageStorageId);
+    await ctx.storage.delete(args.audioStorageId);
+    return await ctx.db.delete(args.podcastId);
+  },
+});
+
 //Query to search trending podcast (all podcast for now)
 export const getTrendingPodcasts = query({
   handler: async (ctx) => {
@@ -79,26 +99,6 @@ export const getPodcastByVoiceType = query({
         )
       )
       .collect();
-  },
-});
-
-//Mutation to delete a podcast
-export const deletePodcast = mutation({
-  args: {
-    podcastId: v.id("podcasts"),
-    imageStorageId: v.id("_storage"),
-    audioStorageId: v.id("_storage"),
-  },
-  handler: async (ctx, args) => {
-    const podcast = await ctx.db.get(args.podcastId);
-
-    if (!podcast) {
-      throw new ConvexError("Podcast not found");
-    }
-
-    await ctx.storage.delete(args.imageStorageId);
-    await ctx.storage.delete(args.audioStorageId);
-    return await ctx.db.delete(args.podcastId);
   },
 });
 
