@@ -45,19 +45,25 @@ const MobileNav = () => {
                   const isActive =
                     pathname === route || pathname.startsWith(`${route}/`);
                   return (
-                    <Link
-                      href={route}
-                      key={label}
-                      className={cn(
-                        "flex gap-3 items-center py-4 max-lg:px-4 justify-start",
-                        {
-                          "bg-nav-focus border-r-4 border-orange-1": isActive,
-                        }
-                      )}
-                    >
-                      <Image src={imgURL} alt={label} width={24} height={24} />
-                      <p>{label}</p>
-                    </Link>
+                    <SheetClose asChild key={route}>
+                      <Link
+                        href={route}
+                        className={cn(
+                          "flex gap-3 items-center py-4 max-lg:px-4 justify-start",
+                          {
+                            "bg-nav-focus border-r-4 border-orange-1": isActive,
+                          }
+                        )}
+                      >
+                        <Image
+                          src={imgURL}
+                          alt={label}
+                          width={24}
+                          height={24}
+                        />
+                        <p>{label}</p>
+                      </Link>
+                    </SheetClose>
                   );
                 })}
               </nav>
