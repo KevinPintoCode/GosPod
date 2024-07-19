@@ -40,7 +40,7 @@ const MobileNav = () => {
           </Link>
           <div className="flex h-[cal(100vh-72px)] flex-col justify-between overflow-y-auto">
             <SheetClose asChild>
-              <nav>
+              <nav className="flex h-full flex-col gap-6 text-white-1">
                 {sidebarLinks.map(({ route, label, imgURL }) => {
                   const isActive =
                     pathname === route || pathname.startsWith(`${route}/`);
@@ -49,7 +49,7 @@ const MobileNav = () => {
                       href={route}
                       key={label}
                       className={cn(
-                        "flex gap-3 items-center py-4 max-lg:px-4 justify-center lg:justify-start",
+                        "flex gap-3 items-center py-4 max-lg:px-4 justify-start",
                         {
                           "bg-nav-focus border-r-4 border-orange-1": isActive,
                         }
