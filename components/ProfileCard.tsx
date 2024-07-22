@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-//import { useAudio } from "@/providers/AudioProvider";
+import { useAudio } from "@/providers/AudioProvider";
 import { PodcastProps, ProfileCardProps } from "@/types";
 
 import LoaderSpinner from "./LoaderSpinner";
