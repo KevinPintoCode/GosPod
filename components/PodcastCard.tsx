@@ -10,6 +10,8 @@ const PodcastCard = ({
   podcastId,
 }: PodcastCardProps) => {
   const router = useRouter();
+  // const views = podcast.views
+  // const [totalViews, setTotalViews] = useState(views)
 
   const handleViews = () => {
     // increase views
