@@ -1,7 +1,7 @@
 import { PodcastCardProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const PodcastCard = ({
   imgUrl,
@@ -10,15 +10,15 @@ const PodcastCard = ({
   podcastId,
 }: PodcastCardProps) => {
   const router = useRouter();
-  // const views = podcast.views
-  // const [totalViews, setTotalViews] = useState(views)
+  const views = 0;
+  const [totalViews, setTotalViews] = useState(0);
 
   const handleViews = () => {
-    // increase views
-
     router.push(`/podcasts/${podcastId}`, {
       scroll: true,
     });
+
+    return views;
   };
 
   return (
