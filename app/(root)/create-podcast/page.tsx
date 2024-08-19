@@ -143,7 +143,7 @@ const CreatePodcast = () => {
                   <FormControl>
                     <Input
                       className="input-class focus-visible:ring-offset-orange-1"
-                      placeholder="GosPod Podcast"
+                      placeholder="AI Podcast"
                       {...field}
                     />
                   </FormControl>
@@ -197,7 +197,7 @@ const CreatePodcast = () => {
                   <FormControl>
                     <Textarea
                       className="input-class focus-visible:ring-offset-orange-1"
-                      placeholder="Write a short description for your GosPod."
+                      placeholder="Write a short description for your PodcAIst."
                       {...field}
                     />
                   </FormControl>

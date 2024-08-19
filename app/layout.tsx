@@ -7,7 +7,7 @@ import AudioProvider from "@/providers/AudioProvider";
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GosPod",
+  title: "PodcAIst",
   description: "Create your Podcast using AI",
   icons: {
     icon: "/icons/logo.svg",

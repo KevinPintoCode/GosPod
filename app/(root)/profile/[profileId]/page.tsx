@@ -25,7 +25,7 @@ const ProfilePage = ({
   return (
     <section className="mt-9 flex flex-col">
       <h1 className="text-20 font-bold text-white-1 max-md:text-center">
-        GosPod Profile
+        PodcAIst Profile
       </h1>
       <div className="mt-6 flex flex-col gap-6 max-md:items-center md:flex-row">
         <ProfileCard
