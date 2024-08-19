@@ -83,10 +83,8 @@ const CreatePodcast = () => {
     },
   });
 
-  // 2. Define a submit handler.
+  // Define a submit handler.
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     try {
       setIsSubmitting(true);
       if (!audioUrl || !imageUrl || !voiceType) {
