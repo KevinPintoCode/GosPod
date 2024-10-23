@@ -35,7 +35,7 @@ const config = {
           6: "#24272C",
         },
         orange: {
-          1: "#C7EBF0",
+          1: "#C7EBF1",
         },
         gray: {
           1: "#71788B",
