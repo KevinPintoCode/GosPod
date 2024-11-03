@@ -86,7 +86,9 @@ const CreatePodcast = () => {
   // Define a submit handler.
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
+      console.log(isSubmitting);
       setIsSubmitting(true);
+      console.log(isSubmitting);
       if (!audioUrl || !imageUrl || !voiceType) {
         toast({
           title: "You must generate Audio And Thumbnail first.",
@@ -111,6 +113,7 @@ const CreatePodcast = () => {
       setIsSubmitting(false);
       router.push("/");
     } catch (error) {
+      console.log(isSubmitting);
       console.log(error);
       toast({
         title: "Something went wrong when creating your podcast.",
