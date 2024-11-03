@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "PodcAIst",
   description: "Create your Podcast using AI",
   icons: {
-    icon: "/icons/logo.svg",
+    icon: "/icons/logo2.svg",
   },
 };
 
