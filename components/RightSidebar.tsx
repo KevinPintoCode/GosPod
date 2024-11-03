@@ -63,6 +63,7 @@ const RightSidebar = () => {
                   className="aspect-square rounded-lg"
                   width={44}
                   height={44}
+                  sizes="Big"
                 />
                 <h2 className="text-14 font-semibold text-white-1">
                   {podcaster.name}

@@ -53,6 +53,7 @@ const EmblaCarousel = ({ fansLikeDetail }: CarouselProps) => {
           >
             <Image
               src={item.imageUrl}
+              sizes="alt"
               alt="card"
               fill
               className="absolute size-full rounded-xl border-none"
